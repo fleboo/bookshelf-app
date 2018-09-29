@@ -10,6 +10,15 @@ class BooksContent extends Component {
     books: []
   }
 
+  // Get Books from API after the DOM mounts  
+  componentDidMount() {
+    getAll().then((data) => {
+      const books = data;
+
+      this.setState({books});
+    }).catch(error => console.log(error));
+  }
+
   // Function to handle changing books in shelves
   shelfChangeHandler = (event, bookUpdate) => {
     const shelf = event.target.value;

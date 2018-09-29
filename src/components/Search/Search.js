@@ -4,6 +4,8 @@ import { Link } from 'react-router-dom';
 import Book from '../Book/Book';
 
 class Search extends Component {
+  
+
   render() {
     return (
       <div className="search-books">
