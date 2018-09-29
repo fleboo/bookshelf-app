@@ -4,13 +4,13 @@ This is Udacity's foundational React project. It tests understanding of React st
 
 ## Instructions
 * Clone the application
-`$ git clone https://github.com/fleboo/reactnd-myreads.git`
+```$ git clone https://github.com/fleboo/reactnd-myreads.git```
 * Navigation to the project directory
-`$ cd reactnd-myreads
+```$ cd reactnd-myreads```
 * Install dependencies
-`$ npm install`
+```$ npm install```
 * Open the application on a web browser as follows.
-`$ npm start`
+```$ npm start```
 
 ## Dependencies and Acknowledgments
 
