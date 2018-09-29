@@ -4,9 +4,9 @@ This is Udacity's foundational React project. It tests understanding of React st
 
 ## Instructions
 * Clone the application
-```$ git clone https://github.com/fleboo/reactnd-myreads.git```
+```$ git clone https://github.com/fleboo/bookshelf-app.git```
 * Navigation to the project directory
-```$ cd reactnd-myreads```
+```$ cd bookshelf-app```
 * Install dependencies
 ```$ npm install```
 * Open the application on a web browser as follows.
