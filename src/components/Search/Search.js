@@ -1,10 +1,36 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 
+import { search, update } from '../../BooksAPI';
 import Book from '../Book/Book';
 
 class Search extends Component {
-  
+  state = {
+    results: [],
+    books:[],
+    query: ''
+  }
+  // Function to handle book searches
+  bookSearchHandler = (event) => {
+    event.preventDefault();
+    const query = event.target.value;
+    this.setState({query});
+
+
+    if(query.trim()) {
+      search(query).then((bookResults) => {
+        if (bookResults.error) {
+          console.log(bookResults.error);
+          this.setState({results: []});
+        } else {
+          this.setState({results: bookResults});
+          this.matchShelfHandler();
+        }
+      })
+    } else {
+      this.setState({books: [], results: []});
+    }
+  }
 
   render() {
     return (
