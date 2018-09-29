@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 
-import { search, update } from '../../BooksAPI';
+import { getAll, search, update } from '../../BooksAPI';
 import Book from '../Book/Book';
 
 class Search extends Component {
@@ -26,6 +26,14 @@ class Search extends Component {
     })
   }
 
+  // Get list of books on the bookshelf
+  componentDidMount() {
+    getAll().then((data) => {
+      this.setState({books: data});
+    })
+  }
+
+
   // Function to handle book searches
   bookSearchHandler = (event) => {
     event.preventDefault();
@@ -39,7 +47,7 @@ class Search extends Component {
           this.setState({results: []});
         } else {
           this.setState({results: bookResults});
-          // this.matchShelfHandler();
+          this.matchShelfHandler();
         }
       })
     } else {
@@ -47,7 +55,23 @@ class Search extends Component {
     }
   }
 
+  // Function to match the shelf of the book
+  matchShelfHandler = () => {
+    const books = [...this.state.books];
+    const results = [...this.state.results];
 
+    if (results.length > 0) {
+      books.forEach((book) => {
+        results.forEach((result) => {
+          if(book.id === result.id) {
+            result.shelf = book.shelf;
+          }
+        });
+      });
+
+      this.setState({results});
+    }  
+  }
 
   render() {
     return (
