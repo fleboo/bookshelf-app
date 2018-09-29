@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
 import Aux from '../hoc/Aux/Aux';
-import Bookshelves from '';
+import Bookshelves from '../components/Bookshelves/Bookshelves';
 
 class BooksContent extends Component {
   state = {
