@@ -10,12 +10,27 @@ class Search extends Component {
     books:[],
     query: ''
   }
+  changeShelfHandler = (event, bookUpdate) => {
+    console.log('[INSIDE] changeShelfHandler()');
+    
+    const shelf = event.target.value;
+
+    update(bookUpdate, shelf).then((res) => {
+      console.log('[UPDATE Response]', res);
+  
+      bookUpdate.shelf = shelf;
+      let updatedBooks = this.state.books.filter((book) => book.id !== bookUpdate.id)
+      updatedBooks.push(bookUpdate);
+      
+      this.setState({books: updatedBooks});
+    })
+  }
+
   // Function to handle book searches
   bookSearchHandler = (event) => {
     event.preventDefault();
     const query = event.target.value;
     this.setState({query});
-
 
     if(query.trim()) {
       search(query).then((bookResults) => {
@@ -24,13 +39,15 @@ class Search extends Component {
           this.setState({results: []});
         } else {
           this.setState({results: bookResults});
-          this.matchShelfHandler();
+          // this.matchShelfHandler();
         }
       })
     } else {
       this.setState({books: [], results: []});
     }
   }
+
+
 
   render() {
     return (
