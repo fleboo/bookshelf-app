@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 
 import { getAll, update } from '../BooksAPI';
 import Aux from '../hoc/Aux/Aux';
@@ -30,6 +31,9 @@ class BooksContent extends Component {
         <Bookshelves
           moveBook={this.shelfChangeHandler} 
           allBooks={this.state.books} />
+        <div className="open-search">
+          <Link to="/search">About</Link>
+        </div>
       </Aux>
     )
   }
