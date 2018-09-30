@@ -1,76 +1,34 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 
-import { getAll, search, update } from '../../BooksAPI';
+import { search } from '../../BooksAPI';
 import Book from '../Book/Book';
 
 class Search extends Component {
   state = {
     results: [],
-    books:[],
     query: ''
   }
-  changeShelfHandler = (event, bookUpdate) => {
-    console.log('[INSIDE] changeShelfHandler()');
-    
-    const shelf = event.target.value;
 
-    update(bookUpdate, shelf).then((res) => {
-      console.log('[UPDATE Response]', res);
-  
-      bookUpdate.shelf = shelf;
-      let updatedBooks = this.state.books.filter((book) => book.id !== bookUpdate.id)
-      updatedBooks.push(bookUpdate);
-      
-      this.setState({books: updatedBooks});
-    })
-  }
-
-  // Get list of books on the bookshelf
-  componentDidMount() {
-    getAll().then((data) => {
-      this.setState({books: data});
-    })
-  }
-
-
-  // Function to handle book searches
+  // Function to search and update book shelf
   bookSearchHandler = (event) => {
     event.preventDefault();
     const query = event.target.value;
     this.setState({query});
 
-    if(query.trim()) {
-      search(query).then((bookResults) => {
-        if (bookResults.error) {
-          console.log(bookResults.error);
-          this.setState({results: []});
-        } else {
-          this.setState({results: bookResults});
-          this.matchShelfHandler();
-        }
-      })
-    } else {
-      this.setState({books: [], results: []});
-    }
-  }
-
-  // Function to match the shelf of the book
-  matchShelfHandler = () => {
-    const books = [...this.state.books];
-    const results = [...this.state.results];
-
-    if (results.length > 0) {
-      books.forEach((book) => {
-        results.forEach((result) => {
-          if(book.id === result.id) {
-            result.shelf = book.shelf;
-          }
-        });
-      });
-
-      this.setState({results});
-    }  
+    // This code snippet was provided by Udacity code reviewer
+    search(query,30).then((books) => {
+      if(!!books){
+        if(books.length>0){
+          const results = books.map((book) => {
+            const existingBook = this.props.books.find((b) => b.id === book.id)
+            book.shelf = !!existingBook ? existingBook.shelf : 'none'
+            return book
+          });
+          this.setState({ results })
+        }  
+      }
+    })
   }
 
   render() {
@@ -90,7 +48,7 @@ class Search extends Component {
           <ol className="books-grid">
             {this.state.results.length > 0 && this.state.results.map((book) => (
               <Book 
-                moveBook={this.changeShelfHandler} 
+                moveBook={this.props.moveBook} 
                 book={book}
                 key={book.id}
                 {...book} />

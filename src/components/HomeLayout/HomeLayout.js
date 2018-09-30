@@ -1,17 +1,15 @@
-import React, { Component } from 'react';
+import React from 'react';
 
 import Title from '../Title/Title';
 import BooksContent from '../../containers/BooksContent';
 
-class HomeLayout extends Component {
-  render() {
-    return (
-      <div className="list-books">
-        <Title />
-        <BooksContent />
-      </div>
-    )
-  }
-}
+const homeLayout = (props) => (
+  <div className="list-books">
+    <Title />
+    <BooksContent
+      books={props.books}
+      moveBook={props.moveBook} />
+  </div>
+);
 
-export default HomeLayout;
+export default homeLayout;
